@@ -1,3 +1,6 @@
+# Software requirements
+    - Python version 3.7+
+
 # VSCode plugins
     - Python (IntelliSense)
     - Thunder client
@@ -8,7 +11,7 @@
 
 # Server start: 
     $ uvicorn main:app --reload  
-    (notice that "main" is the name of the file to run)
+    (notice that "main" is the name of the file to run the app instance)
 
 # Server stop: CTRL+C
 

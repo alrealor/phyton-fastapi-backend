@@ -26,9 +26,26 @@ users = [User(id=1, name="Alan", surname="Altamirano", age=36, url="https://goog
 async def getUsers():
     return users
 
-# get users by ID
+# Get users by ID using path variable 
 @app.get("/users/{id}")
 async def getUsersById(id: int):
+    return searchUser(id)
+        
+# Get users by ID using query string parameter 
+@app.get("/users/")
+async def getUsersById(id: int):
+    return searchUser(id)
+
+# Post operation to add a new user
+@app.post("/user/")
+async def addUser(user: User):
+    if type(searchUser(user.id)) == User:
+        return {"error": "user already exists"}
+    else:
+        users.append(user)
+
+# function to return a list of users by ID
+def searchUser(id: int):    
     usersById = filter(lambda user: user.id == id, users)
     try:
         return list(usersById)[0]
