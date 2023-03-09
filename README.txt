@@ -1,4 +1,5 @@
 # Software requirements
+    - VSCode IDE
     - Python version 3.7+
 
 # VSCode plugins
