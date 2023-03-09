@@ -1,12 +1,8 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-app = FastAPI()
-
-# Server start: uvicorn users:app --reload
-# Server stop: CTRL+C
-# Documentation using Swagger http://127.0.0.1:8000/docs
-# Documentation using Redocly http://127.0.0.1:8000/redoc
+# Allows main API having access to the resources of users API
+router = APIRouter(prefix="/users")
 
 # User model
 class User(BaseModel):
@@ -23,22 +19,22 @@ users = [User(id=1, name="Charles Xavier", alias="Professor-X", age=55, url="htt
          ]
 
 # Get users operation
-@app.get("/users/", response_model=list[User])
+@router.get("/", response_model=list[User])
 async def getUsers():
     return users
 
 # Get users by ID using path variable 
-@app.get("/users/{id}", response_model=User)
+@router.get("/{id}", response_model=User)
 async def getUsersById(id: int):
     return searchUser(id)
         
 # Get users by ID using query string parameter 
-""" @app.get("/users", response_model=User)
+""" @router.get("/users", response_model=User)
 async def getUsersById(id: int):
     return searchUser(id) """
 
 # Post operation to add a new user
-@app.post("/users", response_model=User, status_code=201)
+@router.post("/", response_model=User, status_code=201)
 async def addUser(user: User):
     if type(searchUser(user.id)) == User:
         raise HTTPException(status_code=422, detail="user already exists")
@@ -46,7 +42,7 @@ async def addUser(user: User):
     return user
 
 # Put operation to update a user
-@app.put("/users", response_model=User)
+@router.put("/", response_model=User)
 async def updateUser(user: User):
     found: bool = False
     for idx, currentUser in enumerate(users):
@@ -58,7 +54,7 @@ async def updateUser(user: User):
     return user
 
 # Delete operation to remove a user
-@app.delete("/users/{id}")
+@router.delete("/{id}")
 async def deleteUser(id: int):
     found: bool = False
     for idx, currentUser in enumerate(users):
@@ -68,10 +64,11 @@ async def deleteUser(id: int):
     if not found:
         raise HTTPException(status_code=422, detail="user not found")
 
+
 # function to return a list of users by ID
 def searchUser(id: int):    
     usersById = filter(lambda item: item.id == id, users)
     try:
         return list(usersById)[0]
     except:
-        raise HTTPException(status_code=422, detail="user not found")
+        return None
