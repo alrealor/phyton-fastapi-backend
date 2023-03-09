@@ -16,9 +16,10 @@ class User(BaseModel):
     age: int
     url: str
 
-users = [User(id=1, name="Alan", surname="Altamirano", age=36, url="https://google.com"),
-         User(id=2, name="Fernando", surname="Altamirano", age=26, url="https://google.com"),
-         User(id=3, name="Ulises", surname="Altamirano", age=35, url="https://google.com")
+users = [User(id=1, name="Alan", surname="Altamirano", age=36, url="https://algunsitiodealan.com"),
+         User(id=2, name="Fernando", surname="Altamirano", age=26, url="https://algunsitiodefernando.com"),
+         User(id=3, name="Ulises", surname="Altamirano", age=35, url="https://algunsitiodeuli.com"),
+         User(id=4, name="Alfredo", surname="Altamirano", age=30, url="https://algunsitiodefredy.com")
          ]
 
 # Get users operation
