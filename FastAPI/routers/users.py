@@ -2,7 +2,9 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
 # Allows main API having access to the resources of users API
-router = APIRouter(prefix="/users")
+router = APIRouter(prefix="/users",
+                   tags=["users"],
+                   responses={404: {"message":"resource not found"}})
 
 # User model
 class User(BaseModel):
