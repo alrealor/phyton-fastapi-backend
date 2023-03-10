@@ -2,10 +2,11 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
 # Allows main API having access to the resources of products API
-router = APIRouter(prefix="/products")
+router = APIRouter(prefix="/products", 
+                   tags=["products"], 
+                   responses={404: {"message":"resource not found"}})
 
-
-# User model
+# Product model
 class Product(BaseModel):
     id: int
     name: str
@@ -21,7 +22,7 @@ async def getProducts():
     return list(products)
 
 
-# function to return a list of users by ID
+# function to return a list of products by ID
 def searchProduct(id: int):    
     productsById = filter(lambda item: item.id == id, products)
     try:
