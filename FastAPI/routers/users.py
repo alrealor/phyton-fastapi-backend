@@ -10,14 +10,14 @@ router = APIRouter(prefix="/users",
 class User(BaseModel):
     id: int
     name: str
-    alias: str
+    surname: str
     age: int
-    url: str
+    techs: list[str]
 
-users = [User(id=1, name="Charles Xavier", alias="Professor-X", age=55, url="https://www.marvel.com/characters/professor-x"),
-         User(id=2, name="James Howlett", alias="Wolverine", age=150, url="https://www.marvel.com/characters/wolverine-james-howlett/in-comics"),
-         User(id=3, name="Ororo N'Dare", alias="Storm", age=35, url="https://www.marvel.com/characters/storm/in-comics"),
-         User(id=4, name="Kurt Wagner", alias="Nightcrawler", age=25, url="https://www.marvel.com/characters/nightcrawler")
+users = [User(id=1, name="Alan", surname="Altamirano", age=300, techs=["java", "angular", "python"]),
+         User(id=2, name="Fernando", surname="Altamirano", age=26, techs=["java", "angular", "python"]),
+         User(id=3, name="Ulises", surname="Altamirano", age=35, techs=["cucumber", "ruby"]),
+         User(id=4, name="Alfredo", surname="Altamirano", age=30, techs=["java", "angular"])
          ]
 
 # Get users operation
