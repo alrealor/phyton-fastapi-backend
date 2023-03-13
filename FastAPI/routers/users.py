@@ -27,25 +27,25 @@ async def getUsers():
 
 # Get users by ID using path variable 
 @router.get("/{id}", response_model=User)
-async def getUsersById(id: int):
-    return searchUser(id)
+async def get_users_by_id(id: int):
+    return search_user(id)
         
 # Get users by ID using query string parameter 
 """ @router.get("/users", response_model=User)
 async def getUsersById(id: int):
-    return searchUser(id) """
+    return search_user(id) """
 
 # Post operation to add a new user
 @router.post("/", response_model=User, status_code=201)
-async def addUser(user: User):
-    if type(searchUser(user.id)) == User:
+async def add_user(user: User):
+    if type(search_user(user.id)) == User:
         raise HTTPException(status_code=422, detail="user already exists")
     users.append(user)
     return user
 
 # Put operation to update a user
 @router.put("/", response_model=User)
-async def updateUser(user: User):
+async def update_user(user: User):
     found: bool = False
     for idx, currentUser in enumerate(users):
         if currentUser.id == user.id:
@@ -57,7 +57,7 @@ async def updateUser(user: User):
 
 # Delete operation to remove a user
 @router.delete("/{id}")
-async def deleteUser(id: int):
+async def delete_user(id: int):
     found: bool = False
     for idx, currentUser in enumerate(users):
         if currentUser.id == id:
@@ -68,7 +68,7 @@ async def deleteUser(id: int):
 
 
 # function to return a list of users by ID
-def searchUser(id: int):    
+def search_user(id: int):    
     usersById = filter(lambda item: item.id == id, users)
     try:
         return list(usersById)[0]
