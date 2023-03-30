@@ -9,6 +9,9 @@
 # Install FastAPI and server
     $ pip install fastapi
     $ pip install "uvicorn[standard]"
+    
+    # (for OAuth2 authentication)
+    $ pip3 install python-multipart 
 
 # Server start: 
     $ uvicorn main:app --reload  

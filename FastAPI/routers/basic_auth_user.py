@@ -56,20 +56,27 @@ async def get_current_user(token: str = Depends(oauth2)):
                             detail="Inactive user")    
     return user
 
-# post operation to get login OAuth2 token
+# post operation to get Authentication from OAuth2
 @app.post("/login")
 async def login(form: OAuth2PasswordRequestForm = Depends()):
-    dbUser = usersDB.get(form.username)
-    print("dbUser: ", dbUser)
-    # validate that ser exists
-    if not dbUser:
+
+    # get userBD in json format
+    dbUserJson = usersDB.get(form.username)
+    print("\n dbUser in json format: \n", dbUserJson)
+
+    # get userDB as object
+    dbUserObj = search_user(form.username)
+    print("\n dbUser as object: \n", dbUserObj)
+
+    # validate that user exists
+    if not dbUserJson:
         raise HTTPException(status_code=400, detail="Incorrect user")
     
     # validate user match with pass
-    if not dbUser['password'] == form.password:
+    if not dbUserJson['password'] == form.password:
         raise HTTPException(status_code=400, detail="Incorrect password")
     
-    return {"access_token": form.username, "token_type": "bearer"}
+    return {"access_token": dbUserJson["username"], "token_type": "bearer"}
 
 # this API operation return the current user which depends on OAuth2 authentication
 @app.get("/users/me")
