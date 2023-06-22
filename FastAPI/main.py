@@ -20,6 +20,7 @@ app.include_router(products.router)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Home opertion in main API
+# adding comment
 @app.get("/")
 async def read_root():
     return {"message": "Hello world!"}
